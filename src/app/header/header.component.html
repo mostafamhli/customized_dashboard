@@ -1,0 +1,189 @@
+<div class="head" [ngClass]="getHeadClass()">
+  <div class="head-content">
+    <div class="head-content-left">
+      <div class="search-container">
+        <div *ngIf="!canShowSearchAsOverlay" class="normal-search">
+          <input
+            type="search"
+            class="search"
+            name=""
+            id=""
+            placeholder="Search..."
+          />
+          <i class="bx bx-search-alt-2 search-icon"></i>
+        </div>
+        <div *ngIf="canShowSearchAsOverlay">
+          <button
+            type="button"
+            [matMenuTriggerFor]="menu"
+            #menuTrigger="matMenuTrigger"
+            class="search-menu-btn ripple"
+          >
+            <i class="bx bx-search-alt-2 search-icon"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="head-content-right">
+      <div class="head-menu" *ngIf="!canShowSearchAsOverlay">
+        <div class="head-menu-item">
+          <button
+            class="head-menu-item-btn ripple"
+            [matMenuTriggerFor]="languageMenu"
+          >
+            <img
+              [src]="'../../assets/flags/' + selectedLanguage!.flag + '.jpg'"
+              alt="selected language flag"
+              class="flag"
+            />
+          </button>
+        </div>
+        <div class="head-menu-item">
+          <button class="head-menu-item-btn ripple">
+            <i class="bx bx-expand-alt menu-icon"></i>
+          </button>
+        </div>
+        <div class="head-menu-item">
+          <button
+            class="head-menu-item-btn ripple"
+            [matMenuTriggerFor]="notificationMenu"
+          >
+            <i class="bx bx-bell menu-icon"></i>
+          </button>
+        </div>
+        <div class="head-menu-item">
+          <button class="head-menu-item-btn ripple">
+            <i class="bx bx-comment menu-icon"></i>
+          </button>
+        </div>
+      </div>
+      <div class="head-menu" *ngIf="canShowSearchAsOverlay">
+        <button
+          type="button"
+          [matMenuTriggerFor]="menu2"
+          #menuTrigger="matMenuTrigger"
+          class="search-menu-btn ripple"
+        >
+          <i class="bx bx-dots-vertical-rounded search-icon rounded-icon"></i>
+        </button>
+      </div>
+      <div class="head-user-avatar-container">
+        <div class="head-user-avatar" [matMenuTriggerFor]="userMenu">
+          <img
+            [src]="'../../assets/Mostafa.png'"
+            alt="user photo"
+            class="user-avatar"
+          />
+          <div class="circle-indicator pulse"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<mat-menu #menu="matMenu">
+  <div
+    class="overlay overlay-search overlay-fall"
+    (click)="stopPropagation($event)"
+  >
+    <input type="search" class="search" name="" id="" placeholder="Search..." />
+    <button class="search-btn" (click)="search()">
+      <i class="bx bx-search-alt-2 search-icon"></i>
+    </button>
+  </div>
+</mat-menu>
+
+<mat-menu #menu2="matMenu" xPosition="after">
+  <div
+    class="overlay overlay-search overlay-fall"
+    (click)="stopPropagation($event)"
+  >
+    <div class="head-content-right1">
+      <div class="head-menu">
+        <div class="head-menu-item">
+          <button
+            class="head-menu-item-btn ripple"
+            [matMenuTriggerFor]="languageMenu"
+          >
+            <img
+              [src]="'../../assets/flags/' + selectedLanguage!.flag + '.jpg'"
+              alt="selected language flag"
+              class="flag"
+            />
+          </button>
+        </div>
+        <div class="head-menu-item">
+          <button class="head-menu-item-btn ripple">
+            <i class="bx bx-expand-alt menu-icon"></i>
+          </button>
+        </div>
+        <div class="head-menu-item">
+          <button
+            class="head-menu-item-btn ripple"
+            [matMenuTriggerFor]="notificationMenu"
+          >
+            <i class="bx bx-bell menu-icon"></i>
+          </button>
+        </div>
+        <div class="head-menu-item">
+          <button class="head-menu-item-btn ripple">
+            <i class="bx bx-comment menu-icon"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</mat-menu>
+
+<mat-menu #languageMenu="matMenu">
+  <div class="overlay overlay-language overlay-fall">
+    <ul>
+      <li *ngFor="let lang of languages" (click)="changeLanguage(lang)">
+        <img
+          [src]="'../../assets/flags/' + lang.flag + '.jpg'"
+          alt="Language flag"
+        />
+        <span>{{ lang.language }}</span>
+      </li>
+    </ul>
+  </div>
+</mat-menu>
+
+<mat-menu #notificationMenu="matMenu">
+  <div class="overlay overlay-notification overlay-fall">
+    <ul>
+      <li class="notification-head-container">
+        <div class="notification-head">Notifications</div>
+        <span class="view-all-links">
+          <a>View All</a>
+        </span>
+      </li>
+      <li
+        class="notification-message-container"
+        *ngFor="let noti of notifications"
+      >
+        <i [class]="noti.icon"></i>
+        <div>
+          <div class="notification-subject">
+            {{ noti.subject }}
+          </div>
+          <p class="notification-desc">
+            {{ noti.description }}
+          </p>
+        </div>
+      </li>
+    </ul>
+  </div>
+</mat-menu>
+
+<mat-menu #userMenu="matMenu">
+  <div class="overlay overlay-user overlay-fall">
+    <ul>
+      <li *ngFor="let item of userItems">
+        <a>
+          <i class="icon" [class]="item.icon"></i>
+          <span>{{ item.label }}</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</mat-menu>
